@@ -2,7 +2,7 @@
   "use strict";
 
   const $ = (selector) => document.querySelector(selector);
-  const state = { data: { schema_version: 1, categories: [] }, activeCategoryId: null, searchQuery: "", editingItemId: null };
+  const state = { data: { schema_version: 1, categories: [] }, activeCategoryId: null, searchQuery: "", editingItemId: null, selectedItemId: null };
   let api = null;
   let toastTimer = null;
 
@@ -32,6 +32,42 @@
     return items.sort((left, right) => Number(right.fav) - Number(left.fav));
   }
 
+  function ensureSelection() {
+    const items = filteredItems();
+    if (!items.length) {
+      state.selectedItemId = null;
+      return null;
+    }
+    if (!items.some((item) => item.id === state.selectedItemId)) {
+      state.selectedItemId = items[0].id;
+    }
+    return state.selectedItemId;
+  }
+
+  function selectedItem() {
+    ensureSelection();
+    return filteredItems().find((item) => item.id === state.selectedItemId) || null;
+  }
+
+  function selectItem(id, rerender = true) {
+    if (!filteredItems().some((item) => item.id === id)) return;
+    state.selectedItemId = id;
+    if (rerender) renderItems();
+    else {
+      document.querySelectorAll(".prompt-item").forEach((row) => {
+        row.classList.toggle("selected", row.dataset.iid === id);
+      });
+    }
+  }
+
+  function moveSelection(direction) {
+    const items = filteredItems();
+    if (!items.length) return;
+    const current = Math.max(0, items.findIndex((item) => item.id === state.selectedItemId));
+    const next = (current + direction + items.length) % items.length;
+    selectItem(items[next].id);
+  }
+
   function isCode(text) {
     return text.split("\n").length >= 4 && /[{}();=><]/.test(text);
   }
@@ -52,11 +88,11 @@
   }
 
   function renderCategories() {
-    const nodes = state.data.categories.map((category) => {
+    const nodes = state.data.categories.map((category, index) => {
       const button = document.createElement("button");
       button.className = "cat-tab" + (category.id === state.activeCategoryId ? " active" : "");
       button.dataset.cid = category.id;
-      button.append(document.createTextNode(category.name));
+      button.append(document.createTextNode(`${String(index + 1).padStart(2, "0")} ${category.name.toUpperCase()}`));
       const badge = document.createElement("span");
       badge.className = "cat-badge";
       badge.textContent = String(category.items.length);
@@ -73,36 +109,51 @@
     $("#no-results").classList.add("hidden");
     if (!activeCategory()) {
       container.replaceChildren();
+      $("#result-count").textContent = "0 / 0";
       return;
     }
     if (items.length === 0) {
       container.replaceChildren();
       $(state.searchQuery ? "#no-results" : "#empty-state").classList.remove("hidden");
+      $("#result-count").textContent = `0 / ${activeCategory().items.length}`;
       return;
     }
+
+    ensureSelection();
 
     const nodes = items.map((item, index) => {
       const row = document.createElement("div");
       row.className = "prompt-item";
+      row.classList.toggle("selected", item.id === state.selectedItemId);
       row.dataset.iid = item.id;
       if (item.desc) row.dataset.desc = item.desc;
       row.style.animationDelay = `${index * 0.03}s`;
 
       const number = document.createElement("span");
       number.className = "item-index";
-      number.textContent = String(index + 1);
-      const content = document.createElement("span");
-      content.className = "item-content" + (isCode(item.content) ? " is-code" : "");
-      content.textContent = truncate(item.content, 300);
+      number.textContent = String(index + 1).padStart(2, "0");
+      const title = document.createElement("span");
+      title.className = "item-title";
+      title.textContent = truncate(item.desc || item.content.split("\n")[0].trim(), 54);
+      const summary = document.createElement("span");
+      summary.className = "item-summary";
+      summary.textContent = truncate(item.content.replace(/\s+/g, " ").trim(), 110);
       const actions = document.createElement("div");
       actions.className = "item-actions";
+      const shortcut = document.createElement("span");
+      shortcut.className = "item-shortcut";
+      shortcut.textContent = index < 9 ? `⌘${index + 1}` : "";
       const favorite = actionButton("fav", item.id, "收藏", "fav-btn" + (item.fav ? " fav-active" : ""));
       favorite.textContent = item.fav ? "★" : "☆";
-      actions.append(favorite, actionButton("edit", item.id, "编辑", "edit-btn"), actionButton("delete", item.id, "删除", "delete-btn"));
-      row.append(number, content, actions);
+      actions.append(shortcut, favorite, actionButton("edit", item.id, "编辑", "edit-btn"), actionButton("delete", item.id, "删除", "delete-btn"));
+      row.append(number, title, summary, actions);
+      row.addEventListener("mouseenter", () => selectItem(item.id, false));
       return row;
     });
     container.replaceChildren(...nodes);
+    $("#result-count").textContent = `${items.length} / ${activeCategory().items.length}`;
+    const selected = Array.from(container.querySelectorAll(".prompt-item")).find((row) => row.dataset.iid === state.selectedItemId);
+    if (selected) selected.scrollIntoView({ block: "nearest" });
   }
 
   function renderAll() {
@@ -330,6 +381,90 @@
     toast("ok", "Exported");
   }
 
+  function isTypingTarget(target) {
+    if (!target) return false;
+    return ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) || target.isContentEditable;
+  }
+
+  function toggleToolsMenu(force) {
+    const menu = $("#tools-menu");
+    const shouldOpen = typeof force === "boolean" ? force : menu.classList.contains("hidden");
+    menu.classList.toggle("hidden", !shouldOpen);
+    $("#btn-tools").classList.toggle("active", shouldOpen);
+  }
+
+  function closeTransientUi() {
+    if (!$("#modal-item").classList.contains("hidden")) return closeItemModal(), true;
+    if (!$("#modal-manage").classList.contains("hidden")) return closeManageModal(), true;
+    if (!$("#quit-modal").classList.contains("hidden")) return $("#quit-modal").classList.add("hidden"), true;
+    if (!$("#tools-menu").classList.contains("hidden")) return toggleToolsMenu(false), true;
+    if (state.searchQuery) {
+      state.searchQuery = "";
+      state.selectedItemId = null;
+      $("#search-input").value = "";
+      $("#search-clear").classList.add("hidden");
+      renderItems();
+      return true;
+    }
+    return false;
+  }
+
+  function handleGlobalKey(event) {
+    if (event.key === "Escape") {
+      if (closeTransientUi()) event.preventDefault();
+      else if (isTypingTarget(event.target)) event.target.blur();
+      return;
+    }
+    if (isTypingTarget(event.target)) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+    switch (event.key) {
+      case "ArrowUp":
+        event.preventDefault();
+        moveSelection(-1);
+        return;
+      case "ArrowDown":
+        event.preventDefault();
+        moveSelection(1);
+        return;
+      case "Enter": {
+        event.preventDefault();
+        const item = selectedItem();
+        if (item) copyPrompt(item.id);
+        return;
+      }
+      case "/":
+        event.preventDefault();
+        $("#search-input").focus();
+        return;
+    }
+
+    if (/^[1-9]$/.test(event.key)) {
+      const item = filteredItems()[Number(event.key) - 1];
+      if (item) copyPrompt(item.id);
+      return;
+    }
+
+    switch (event.key.toLowerCase()) {
+      case "n":
+        event.preventDefault();
+        openItemModal();
+        return;
+      case "e": {
+        event.preventDefault();
+        const item = selectedItem();
+        if (item) openItemModal(item.id);
+        return;
+      }
+      case "f": {
+        event.preventDefault();
+        const item = selectedItem();
+        if (item) toggleFavorite(item.id);
+        return;
+      }
+    }
+  }
+
   function bindWindowControls() {
     const shell = $("#app-shell");
     const titlebar = document.querySelector(".titlebar");
@@ -383,20 +518,22 @@
   function bindEvents() {
     $("#search-input").addEventListener("input", (event) => {
       state.searchQuery = event.target.value;
+      state.selectedItemId = null;
       $("#search-clear").classList.toggle("hidden", !state.searchQuery);
       renderItems();
     });
     $("#search-clear").addEventListener("click", () => {
-      state.searchQuery = ""; $("#search-input").value = ""; $("#search-clear").classList.add("hidden"); renderItems();
+      state.searchQuery = ""; state.selectedItemId = null; $("#search-input").value = ""; $("#search-clear").classList.add("hidden"); renderItems();
     });
     $("#category-nav").addEventListener("click", (event) => {
       const tab = event.target.closest(".cat-tab");
       if (!tab) return;
-      state.activeCategoryId = tab.dataset.cid; state.searchQuery = ""; $("#search-input").value = ""; renderAll();
+      state.activeCategoryId = tab.dataset.cid; state.searchQuery = ""; state.selectedItemId = null; $("#search-input").value = ""; $("#search-clear").classList.add("hidden"); renderAll();
     });
     $("#items-container").addEventListener("click", (event) => {
       const action = event.target.closest("[data-act]");
       const row = event.target.closest(".prompt-item");
+      if (row) state.selectedItemId = row.dataset.iid;
       if (action) {
         event.stopPropagation();
         if (action.dataset.act === "edit") openItemModal(action.dataset.iid);
@@ -411,6 +548,7 @@
     $("#btn-add-item").addEventListener("click", () => openItemModal());
     $("#btn-manage").addEventListener("click", openManageModal);
     $("#btn-export").addEventListener("click", exportData);
+    $("#btn-tools").addEventListener("click", (event) => { event.stopPropagation(); toggleToolsMenu(); });
     $("#btn-import").addEventListener("click", () => {
       const input = document.createElement("input");
       input.type = "file"; input.accept = ".json";
@@ -430,12 +568,9 @@
     $("#btn-quit").addEventListener("click", () => $("#quit-modal").classList.remove("hidden"));
     $("#quit-no").addEventListener("click", () => $("#quit-modal").classList.add("hidden"));
     $("#quit-yes").addEventListener("click", () => api.quit_app());
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "/" && document.activeElement === document.body) { event.preventDefault(); $("#search-input").focus(); }
-      if (event.key === "Escape") { closeItemModal(); closeManageModal(); }
-      if (document.activeElement === document.body && /^[1-9]$/.test(event.key)) {
-        const item = filteredItems()[Number(event.key) - 1]; if (item) copyPrompt(item.id);
-      }
+    document.addEventListener("keydown", handleGlobalKey);
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest("#tools-menu") && !event.target.closest("#btn-tools")) toggleToolsMenu(false);
     });
     const tooltip = $("#tt-desc");
     document.addEventListener("mousemove", (event) => {
