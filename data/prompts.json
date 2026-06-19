@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "categories": [
+    {
+      "id": "vib-coding",
+      "name": "🎯 Vib Coding",
+      "items": [
+        {
+          "id": "vc-1",
+          "content": "You are an expert senior software engineer. Think carefully about my request and implement the best solution. Write clean, well-documented, and thoroughly tested code.",
+          "desc": "通用高级工程师角色设定，适合启动任何编码任务",
+          "fav": false
+        },
+        {
+          "id": "vc-2",
+          "content": "Please analyze this codebase and identify potential bugs, performance issues, and security vulnerabilities. Provide specific file paths and line numbers.",
+          "desc": "全代码库审计：Bug、性能瓶颈、安全漏洞，给出具体位置",
+          "fav": false
+        },
+        {
+          "id": "vc-3",
+          "content": "Refactor this code following SOLID principles. Keep the public API unchanged. Add comprehensive error handling and logging.",
+          "desc": "按 SOLID 原则重构，不动公共接口，补全错误处理和日志",
+          "fav": false
+        },
+        {
+          "id": "vc-4",
+          "content": "Write unit tests for this module. Cover edge cases, error paths, and happy paths. Use descriptive test names that explain the scenario being tested.",
+          "desc": "写单元测试，覆盖边界/异常/正常路径，测试名即文档",
+          "fav": false
+        },
+        {
+          "id": "vc-5",
+          "content": "Review this pull request diff. Focus on logic errors, missing edge cases, and adherence to project coding standards. Suggest specific improvements.",
+          "desc": "Code Review：逻辑错误、遗漏边界、规范合规，逐条建议",
+          "fav": false
+        },
+        {
+          "id": "vc-mvp",
+          "content": "Build a [product name] that helps [target user] solve [core problem].\n\nCore MVP features:\n1. [Feature 1]\n2. [Feature 2]\n3. [Feature 3]\n\nExplicitly NOT included (do NOT build):\n- [Exclusion 1]\n- [Exclusion 2]\n\nTech stack: [frontend + backend + database]\nData structure:\n- [table name] (fields)\n\nUI Style: [clean & professional / dark mode / minimal]\nNavigation: [sidebar / top nav / bottom tabs]",
+          "desc": "MVP 快速启动模板：明确范围和排除项，防止 AI 过度构建",
+          "fav": false
+        },
+        {
+          "id": "vc-interview",
+          "content": "I want to build [one-sentence description].\nUse AskUserQuestion to interview me. Cover technical implementation, UI/UX, edge cases, and trade-offs. Skip obvious questions and dig into what I may not have considered. Keep going until all areas are covered, then write the conclusions into SPEC.md.",
+          "desc": "让 AI 反过来面试你，挖出你没考虑到的点，输出完整规格书",
+          "fav": false
+        },
+        {
+          "id": "vc-focus",
+          "content": "Role: You are a senior full-stack engineer.\nContext: [paste PRD or architecture]\nTask: Implement [feature name].\nTech stack: [list stack]\nConstraints:\n  - Do NOT modify any existing files outside /[feature-folder]\n  - Use functional components only\n  - All API calls go through a /src/api/ service layer\nAcceptance criteria:\n  1. [Criterion 1]\n  2. [Criterion 2]\n  3. [Criterion 3]\nOutput: Complete file contents for each file you create or modify.",
+          "desc": "聚焦单功能开发：约束明确、验收标准清晰、不改动无关文件",
+          "fav": false
+        },
+        {
+          "id": "vc-ui-only",
+          "content": "Make solely visual enhancements. Ensure functionality and logic remain unaffected.\n\nGain a comprehensive understanding of how the existing UI interacts with the app, ensuring that logic, state management, and APIs stay intact. Conduct extensive testing to verify the app operates precisely as it did before. Cease all actions if there is any uncertainty regarding potential unintended consequences.",
+          "desc": "纯 UI 改动不碰逻辑：先理解再动手，不确定就停",
+          "fav": false
+        },
+        {
+          "id": "vc-clean",
+          "content": "Review this entire codebase for dead code, unused imports, duplicated logic, and overly complex functions. For each issue found:\n1. State the file and line\n2. Explain why it's a problem\n3. Show the minimal fix\n\nDo NOT change any public APIs or break existing tests.",
+          "desc": "全库死代码大扫除：未用导入、重复逻辑、过度复杂函数",
+          "fav": false
+        },
+        {
+          "id": "vc-perf",
+          "content": "Profile this application for performance bottlenecks. Focus on:\n1. Slowest API endpoints (with timing data)\n2. Largest bundle chunks (with sizes)\n3. Unnecessary re-renders (with component names)\n4. Missing memoization opportunities\n5. Database queries without proper indexes\n\nFor each bottleneck, propose a specific fix with estimated improvement.",
+          "desc": "性能诊断：慢接口、大包体积、多余渲染、缺索引，带改善预估",
+          "fav": false
+        },
+        {
+          "id": "vc-error-msg",
+          "content": "Review all error messages in this codebase. For each one:\n- Is it user-friendly? (non-technical language)\n- Does it suggest a next action?\n- Does it leak sensitive info? (stack traces, internal paths, SQL)\n\nRewrite any that fail these criteria. Add error messages where errors are caught silently.",
+          "desc": "错误信息人性化审查：用户看得懂、知道下一步、不泄露敏感信息",
+          "fav": false
+        },
+        {
+          "id": "vc-acess",
+          "content": "Audit this application for accessibility:\n1. Can all interactive elements be reached via keyboard?\n2. Do all images have meaningful alt text?\n3. Is the color contrast ratio at least 4.5:1?\n4. Are form inputs properly labeled?\n5. Does the page have a logical heading hierarchy?\n6. Are ARIA attributes used correctly?\n\nList every violation with its exact location and the WCAG rule it breaks. Provide the fix for each.",
+          "desc": "无障碍审计：键盘可达、对比度、标签语义、ARIA，逐条标 WCAG 规则",
+          "fav": false
+        },
+        {
+          "id": "vc-types",
+          "content": "Add comprehensive TypeScript types to this codebase. No `any` unless absolutely necessary. Create shared type definitions in a types/ directory. Ensure strict mode passes without errors. Do NOT change any runtime behavior.",
+          "desc": "TypeScript 类型补全：禁止 any，严格模式零报错，不动运行时行为",
+          "fav": false
+        },
+        {
+          "id": "vc-mobile",
+          "content": "Make this page fully responsive. Test at breakpoints: 320px (small phone), 375px (iPhone), 414px (large phone), 768px (tablet), 1024px (laptop), 1440px (desktop).\n\nRequirements:\n- No horizontal scroll at any breakpoint\n- Touch targets at least 44x44px on mobile\n- Font sizes readable without zooming\n- Images scale properly\n- Navigation adapts (hamburger on mobile)\n\nDo NOT change any functionality.",
+          "desc": "全响应式适配：6 个断点，触控区域、字号、图片、导航全部适配",
+          "fav": false
+        },
+        {
+          "id": "mqjn0a1pxp3n3",
+          "content": "继续",
+          "desc": "让 AI 从上次中断处继续输出",
+          "fav": true
+        }
+      ]
+    },
+    {
+      "id": "debug",
+      "name": "🐛 Debug 调试",
+      "items": [
+        {
+          "id": "db-1",
+          "content": "Explain what this code does in plain English. Assume I have never coded before.\nHere is the code: [paste]\nAlso tell me what inputs it expects and what output it produces.",
+          "desc": "用大白话解释代码：输入什么、输出什么，完全不碰术语",
+          "fav": false
+        },
+        {
+          "id": "db-2",
+          "content": "I am seeing this error: [paste full error]\nExplain what it means in plain English. List the 3 most likely causes in my situation and how to confirm each one.",
+          "desc": "错误信息翻译成人话 + 三个最可能的原因 + 逐一验证方法",
+          "fav": false
+        },
+        {
+          "id": "db-3",
+          "content": "Expected: [what should happen]\nActual: [what happens instead]\nSteps to reproduce:\n1. [step]\n2. [step]\n3. [step]\nRelevant code: [paste]\n\nWhat are the most likely reasons for the mismatch? Give me a short checklist to narrow it down.",
+          "desc": "期望 vs 实际对照排查法，给出缩小范围的检查清单",
+          "fav": false
+        },
+        {
+          "id": "db-4",
+          "content": "Something is wrong with my [button/form/page/API call]. Here is the code: [paste]\nFind likely bugs, edge cases, or missing wiring. For each issue, show the exact change you would make. Propose the smallest change first.",
+          "desc": "找 Bug 专用：先给最小改动方案，再列更深层的修复",
+          "fav": false
+        },
+        {
+          "id": "db-5",
+          "content": "What does this code assume is true for it to work?\n(Examples: required fields, auth state, network availability, non-null data, timing)\nHere is the code: [paste]\nThen tell me which assumptions are most likely false given this symptom: [describe symptom].",
+          "desc": "反推代码的隐含假设，找出哪些假设在症状下最可能不成立",
+          "fav": false
+        },
+        {
+          "id": "db-6",
+          "content": "I am stuck. I will describe what I see, and you ask me one question at a time until we find the cause. Start by asking for the minimum info you need.\nSymptom: [describe]\nEnvironment: [browser, OS, device, local vs deployed]\nError (if any): [paste]",
+          "desc": "交互式排错：AI 问、你答、逐步逼近根因，不跳步不猜",
+          "fav": false
+        },
+        {
+          "id": "db-7",
+          "content": "This worked before and now it doesn't.\nOld version (worked): [paste]\nNew version (broken): [paste]\nIdentify the meaningful differences and rank them by likelihood of causing the bug. Suggest a minimal fix.",
+          "desc": "Diff 对比定位回归 Bug，按可能性排序，给最小修复",
+          "fav": false
+        },
+        {
+          "id": "db-8",
+          "content": "Here is the feature and code:\nFeature: [what it does]\nCode: [paste]\n\nList unusual but realistic cases that could break it (empty input, double clicks, slow network, weird characters, time zones, permissions). For each case, tell me how to reproduce and how to guard against it.",
+          "desc": "边界用例脑暴：空输入、双击、慢网、奇怪字符、时区、权限",
+          "fav": false
+        },
+        {
+          "id": "db-9",
+          "content": "I think the cause is: [your guess]\nI want to fix it by: [your plan]\nHere is the relevant code: [paste]\n\nEvaluate this fix. What could it break? Propose a safer alternative if needed. Include a quick test plan.",
+          "desc": "评估你的修复方案：会引入什么新问题？有更安全的改法吗？",
+          "fav": false
+        },
+        {
+          "id": "db-10",
+          "content": "We fixed the bug: [describe the fix].\nHow do I prevent this class of bug in the future?\nSuggest: validation, better error messages, logging, tests, and UI safeguards. Keep changes small and show code examples.",
+          "desc": "修完 Bug 后防止复发：校验、日志、测试、UI 防护，层层加固",
+          "fav": false
+        }
+      ]
+    },
+    {
+      "id": "planning",
+      "name": "📐 产品设计",
+      "items": [
+        {
+          "id": "pl-1",
+          "content": "You are a technical product manager.\nContext: [paste project idea or market research]\nTech stack: [list your preferred stack]\n\nGenerate a concise PRD including:\n1. User stories (max 5, \"As a [user], I want [action] so that [outcome]\" format)\n2. Data model: list entities and key fields\n3. API endpoints: list route, method, and purpose\n4. Out of scope: explicitly list 3 features NOT in the MVP\n\nOutput as structured markdown.",
+          "desc": "一键生成 PRD：用户故事、数据模型、API 列表、明确排除项",
+          "fav": false
+        },
+        {
+          "id": "pl-2",
+          "content": "Act as a senior architect. Review this system design and identify:\n1. Single points of failure\n2. Scalability bottlenecks\n3. Security vulnerabilities\n4. Over-engineered components\n5. Missing observability (logs, metrics, traces)\n\nFor each issue, explain the risk and propose the simplest fix that actually solves it.",
+          "desc": "架构评审：单点故障、扩展瓶颈、过度设计、可观测性缺失",
+          "fav": false
+        },
+        {
+          "id": "pl-3",
+          "content": "I need to choose between [Option A] and [Option B] for [specific use case].\n\nMy constraints:\n- Team size: [N]\n- Timeline: [X weeks/months]\n- Budget: [if relevant]\n- Existing stack: [current tech]\n\nCompare them on:\n1. Learning curve\n2. Ecosystem maturity\n3. Performance at scale\n4. Hiring availability\n5. Long-term maintenance cost\n\nGive me a clear recommendation with a decision matrix.",
+          "desc": "技术选型决策矩阵：学习曲线、生态、性能、招聘、维护五维对比",
+          "fav": false
+        },
+        {
+          "id": "pl-4",
+          "content": "Break down [feature name] into the smallest possible independent tasks. Each task must:\n- Be completable in under 4 hours\n- Have a clear \"done\" criterion\n- Not block other tasks unnecessarily\n- Be ordered by dependency\n\nFormat as a markdown checklist. Tag tasks as [P0] must-have, [P1] should-have, [P2] nice-to-have.",
+          "desc": "任务拆解：每项 4 小时内可完成，有明确完成标准，按优先级排",
+          "fav": false
+        },
+        {
+          "id": "pl-5",
+          "content": "Write a comprehensive CLAUDE.md for this project. Include:\n1. Project overview (one paragraph)\n2. Tech stack and key dependencies\n3. Directory structure and what lives where\n4. Code conventions (naming, file structure, imports)\n5. How to run / build / test / deploy\n6. Common pitfalls and gotchas\n7. External service dependencies and their config\n\nUse the existing codebase as reference. Keep it concise — this is for AI agents to read.",
+          "desc": "为项目生成 CLAUDE.md：技术栈、目录结构、编码规范、常见陷阱",
+          "fav": false
+        }
+      ]
+    },
+    {
+      "id": "code",
+      "name": "📋 代码片段",
+      "items": [
+        {
+          "id": "cs-1",
+          "content": "console.log(\"DEBUG:\",{variable});\n// TODO: remove before commit",
+          "desc": "调试打印快捷方式，带 TODO 提醒自己提交前删除",
+          "fav": false
+        },
+        {
+          "id": "cs-2",
+          "content": "try {\n  // ...\n} catch (err) {\n  console.error(\"Failed to [action]:\", err);\n  throw new Error(`[Context]: ${err.message}`);\n}",
+          "desc": "带上下文的 try-catch 模板，错误信息保留调用链语义",
+          "fav": false
+        },
+        {
+          "id": "cs-3",
+          "content": "const res = await fetch(url, {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify(data)\n});\nif (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);\nconst json = await res.json();",
+          "desc": "Fetch POST 请求模板：JSON 请求体 + HTTP 状态检查 + 错误信息",
+          "fav": false
+        },
+        {
+          "id": "cs-4",
+          "content": "// Debounce: wait until calls stop for N ms\nfunction debounce(fn, delay = 300) {\n  let timer;\n  return (...args) => {\n    clearTimeout(timer);\n    timer = setTimeout(() => fn(...args), delay);\n  };\n}",
+          "desc": "防抖函数：搜索输入、窗口 resize 等高频事件的标配",
+          "fav": false
+        },
+        {
+          "id": "cs-5",
+          "content": "// Retry with exponential backoff\nasync function retry(fn, maxAttempts = 3, baseDelay = 1000) {\n  for (let i = 0; i < maxAttempts; i++) {\n    try { return await fn(); }\n    catch (err) {\n      if (i === maxAttempts - 1) throw err;\n      await new Promise(r => setTimeout(r, baseDelay * Math.pow(2, i)));\n    }\n  }\n}",
+          "desc": "指数退避重试：3 次尝试，间隔 1s→2s→4s，网络不稳定时必备",
+          "fav": false
+        },
+        {
+          "id": "cs-6",
+          "content": "-- SQL: Find duplicate records\nSELECT email, COUNT(*) as cnt\nFROM users\nGROUP BY email\nHAVING COUNT(*) > 1\nORDER BY cnt DESC;",
+          "desc": "SQL 查重复记录，按重复次数降序排列",
+          "fav": false
+        },
+        {
+          "id": "cs-7",
+          "content": "# Python: safe file read with fallback\ndef read_json(filepath, default=None):\n    try:\n        with open(filepath, 'r', encoding='utf-8') as f:\n            return json.load(f)\n    except (FileNotFoundError, json.JSONDecodeError) as e:\n        logging.warning(f\"Cannot read {filepath}: {e}\")\n        return default if default is not None else {}",
+          "desc": "Python 安全读 JSON：文件不存在或格式损坏自动降级到默认值",
+          "fav": false
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "name": "✍️ 写作",
+      "items": [
+        {
+          "id": "wr-1",
+          "content": "请分析这段文字：\n1. 七步骨架是否完整\n2. 冲突三层是否到位\n3. 人物弧光是否清晰\n4. 对话是否有冰山效应\n5. 节奏控制是否合理",
+          "desc": "按写作规范五维诊断：结构、冲突、人物、对话、节奏",
+          "fav": false
+        },
+        {
+          "id": "wr-2",
+          "content": "You are a professional editor. Review for grammar, narrative flow, character consistency, and dialogue authenticity. Provide line-by-line suggestions.",
+          "desc": "专业编辑逐行审校：语法、叙事流、人物一致性、对话真实感",
+          "fav": false
+        },
+        {
+          "id": "wr-3",
+          "content": "用第三人称限知视角重写。只写主角亲眼所见、心里所想。用感官细节替代抽象情绪词。不进入其他人物内心。",
+          "desc": "限知视角改写：锁死主视角、感官替代情绪、禁止透视他人",
+          "fav": false
+        },
+        {
+          "id": "wr-4",
+          "content": "给这段文字做「手机阅读排版」优化：\n1. 段落不超过三行\n2. 对话一句一段\n3. 关键句独立成段\n4. 超过40字的句子拆分\n5. 删空行，靠段落收放呼吸",
+          "desc": "手机排版五步优化：分段、断句、留白，消除文字墙",
+          "fav": false
+        },
+        {
+          "id": "wr-5",
+          "content": "检查这段文字是否触犯以下绝对禁止项，逐条标注位置和修改建议：\n- 抽象情绪词（悲伤/愤怒/恐惧/美丽等）\n- \"仿佛/宛如/好像/似乎\"\n- 连续三个形容词修饰同一名词\n- 对话中人物直接说出真实意图\n- 视角混乱（同一段落横跳多人内心）",
+          "desc": "写作禁止项逐条审查：情绪词、含混比喻、形容词堆砌、冰山对话、视角",
+          "fav": false
+        }
+      ]
+    },
+    {
+      "id": "shell",
+      "name": "⚡ Shell",
+      "items": [
+        {
+          "id": "sh-1",
+          "content": "find . -name \"*.js\" -exec grep -l \"TODO\" {} \\;",
+          "desc": "递归搜索所有 JS 文件中的 TODO 标记",
+          "fav": false
+        },
+        {
+          "id": "sh-2",
+          "content": "git log --oneline --since=\"7 days ago\" --author=\"$(git config user.name)\"",
+          "desc": "查看自己最近 7 天的 git 提交记录",
+          "fav": false
+        },
+        {
+          "id": "sh-3",
+          "content": "npx prettier --write \"src/**/*.{js,ts,tsx}\" && npx eslint \"src/**/*.{js,ts,tsx}\" --fix",
+          "desc": "Prettier 格式化 + ESLint 自动修复，一键美化代码",
+          "fav": false
+        },
+        {
+          "id": "sh-4",
+          "content": "# Find the biggest files/dirs in current directory\ndu -sh * | sort -rh | head -20",
+          "desc": "列出当前目录下最大的 20 个文件/文件夹",
+          "fav": false
+        },
+        {
+          "id": "sh-5",
+          "content": "# Kill process by port\nlsof -ti :3000 | xargs kill -9",
+          "desc": "杀掉占用 3000 端口的进程（改端口号即用）",
+          "fav": false
+        },
+        {
+          "id": "sh-6",
+          "content": "# Git: undo last commit, keep changes staged\ngit reset --soft HEAD~1",
+          "desc": "撤销最后一次 commit，改动保留在暂存区",
+          "fav": false
+        },
+        {
+          "id": "sh-7",
+          "content": "# Git: show files changed in last commit\ngit diff --name-only HEAD~1 HEAD",
+          "desc": "查看上一次提交改了哪些文件",
+          "fav": false
+        },
+        {
+          "id": "sh-8",
+          "content": "# Find and replace in all files\nfind . -type f -name \"*.ts\" -exec sed -i 's/oldText/newText/g' {} +",
+          "desc": "批量替换所有 .ts 文件中的文本（先确认再执行）",
+          "fav": false
+        },
+        {
+          "id": "sh-9",
+          "content": "# List all branches sorted by last commit date\ngit branch --sort=-committerdate",
+          "desc": "按最近提交时间排列所有分支，找最近在哪个分支干活",
+          "fav": false
+        },
+        {
+          "id": "sh-10",
+          "content": "# Check disk space (human readable)\ndf -h",
+          "desc": "查看磁盘剩余空间，人类可读格式",
+          "fav": false
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "🔐 安全审计",
+      "items": [
+        {
+          "id": "sec-1",
+          "content": "Perform a security review before this app goes live.\n\nChecklist:\n1. Is RLS enabled on all tables?\n2. Any SQL injection risk? (user input directly concatenated into SQL?)\n3. Are any API keys exposed in frontend code or console.log?\n4. Can users access other users' data? (test authorization bypass scenarios)\n5. Are file uploads validated (type, size, content)?\n6. Is rate limiting enabled on all public endpoints?\n\nList issues by severity (Critical / High / Medium / Low). Fix critical issues immediately.",
+          "desc": "上线前安全清单：RLS、SQL 注入、密钥泄露、越权、上传、限流",
+          "fav": false
+        },
+        {
+          "id": "sec-2",
+          "content": "Scan this codebase for secrets:\n1. Hardcoded API keys, tokens, passwords\n2. Private keys or certificates\n3. Internal hostnames or IPs\n4. Database connection strings\n5. AWS/Azure/GCP credentials\n\nCheck all files including .env.example, config files, test fixtures, and comments. Report every finding with file path and line number.",
+          "desc": "全库密钥泄露扫描：API Key、私钥、连接串、云凭证，连注释都不放过",
+          "fav": false
+        },
+        {
+          "id": "sec-3",
+          "content": "Review this authentication flow for common vulnerabilities:\n1. Passwords: min length enforced? Hashing algorithm correct?\n2. Sessions: HttpOnly + Secure + SameSite flags set?\n3. CSRF: token present on state-changing requests?\n4. Password reset: rate-limited? Token single-use + expires?\n5. 2FA: enforced for sensitive actions?\n6. OAuth: state parameter validated? Redirect URI whitelisted?\n\nFor each vulnerability found, show the exact code fix.",
+          "desc": "认证流程六维审计：密码、Session、CSRF、重置、2FA、OAuth",
+          "fav": false
+        }
+      ]
+    }
+  ]
+}

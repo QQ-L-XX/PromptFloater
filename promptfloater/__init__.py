@@ -1,0 +1,2 @@
+"""PromptFloater application services."""
+
