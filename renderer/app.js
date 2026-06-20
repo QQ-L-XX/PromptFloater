@@ -76,6 +76,36 @@
     return text.length <= limit ? text : text.slice(0, limit).trimEnd() + "...";
   }
 
+  function cleanCategoryName(name) {
+    return name
+      .replace(/\p{Extended_Pictographic}/gu, "")
+      .replace(/[\uFE0F\u200D]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function svgIcon(name) {
+    const paths = {
+      fav: "M12 3.7l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.72 6.9 19.4l.98-5.68L3.75 9.7l5.7-.83L12 3.7z",
+      "fav-filled": "M12 3.7l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.72 6.9 19.4l.98-5.68L3.75 9.7l5.7-.83L12 3.7z",
+      edit: "M4 20h4l10.5-10.5a2.83 2.83 0 10-4-4L4 16v4zM13.5 6.5l4 4",
+      delete: "M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5",
+    };
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("width", "14");
+    svg.setAttribute("height", "14");
+    svg.setAttribute("fill", name === "fav-filled" ? "currentColor" : "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "1.8");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("stroke-linejoin", "round");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", paths[name]);
+    svg.append(path);
+    return svg;
+  }
+
   function actionButton(action, itemId, label, extraClass) {
     const button = document.createElement("button");
     button.className = `item-action-btn ${extraClass}`;
@@ -83,7 +113,7 @@
     button.dataset.iid = itemId;
     button.title = label;
     button.setAttribute("aria-label", label);
-    button.textContent = action === "fav" ? "☆" : action === "edit" ? "✎" : "×";
+    button.append(svgIcon(action));
     return button;
   }
 
@@ -92,7 +122,7 @@
       const button = document.createElement("button");
       button.className = "cat-tab" + (category.id === state.activeCategoryId ? " active" : "");
       button.dataset.cid = category.id;
-      button.append(document.createTextNode(`${String(index + 1).padStart(2, "0")} ${category.name.toUpperCase()}`));
+      button.append(document.createTextNode(`${String(index + 1).padStart(2, "0")} ${cleanCategoryName(category.name).toUpperCase()}`));
       const badge = document.createElement("span");
       badge.className = "cat-badge";
       badge.textContent = String(category.items.length);
@@ -140,12 +170,15 @@
       summary.textContent = truncate(item.content.replace(/\s+/g, " ").trim(), 110);
       const actions = document.createElement("div");
       actions.className = "item-actions";
+      const copyState = document.createElement("span");
+      copyState.className = "item-copy-state";
+      copyState.textContent = "COPIED ✓";
       const shortcut = document.createElement("span");
       shortcut.className = "item-shortcut";
-      shortcut.textContent = index < 9 ? `⌘${index + 1}` : "";
+      shortcut.textContent = index < 9 ? `[${index + 1}]` : "";
       const favorite = actionButton("fav", item.id, "收藏", "fav-btn" + (item.fav ? " fav-active" : ""));
-      favorite.textContent = item.fav ? "★" : "☆";
-      actions.append(shortcut, favorite, actionButton("edit", item.id, "编辑", "edit-btn"), actionButton("delete", item.id, "删除", "delete-btn"));
+      if (item.fav) favorite.replaceChildren(svgIcon("fav-filled"));
+      actions.append(copyState, shortcut, favorite, actionButton("edit", item.id, "编辑", "edit-btn"), actionButton("delete", item.id, "删除", "delete-btn"));
       row.append(number, title, summary, actions);
       row.addEventListener("mouseenter", () => selectItem(item.id, false));
       return row;
@@ -212,7 +245,7 @@
       const row = Array.from(document.querySelectorAll(".prompt-item")).find((node) => node.dataset.iid === id);
       if (row) {
         row.classList.add("copied");
-        setTimeout(() => row.classList.remove("copied"), 600);
+        setTimeout(() => { row.classList.remove("copied"); }, 900);
       }
       toast("ok", "Copied");
     };

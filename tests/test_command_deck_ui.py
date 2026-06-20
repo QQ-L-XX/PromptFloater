@@ -52,6 +52,28 @@ class CommandDeckUiTests(unittest.TestCase):
         self.assertIn('data-tool="import"', self.html)
         self.assertIn('data-tool="categories"', self.html)
 
+    def test_icons_use_fixed_svg_instead_of_platform_glyphs(self):
+        self.assertIn("function svgIcon", self.script)
+        self.assertIn("button.append(svgIcon(action))", self.script)
+        self.assertNotIn(">◫<", self.html)
+        self.assertNotIn(">⌖<", self.html)
+        self.assertGreaterEqual(self.html.count("<svg"), 7)
+
+    def test_shortcuts_show_real_single_number_keys(self):
+        self.assertIn('shortcut.textContent = index < 9 ? `[${index + 1}]` : ""', self.script)
+        self.assertNotIn("⌘${index + 1}", self.script)
+
+    def test_category_emoji_is_removed_only_for_display(self):
+        self.assertIn("function cleanCategoryName", self.script)
+        self.assertIn("cleanCategoryName(category.name)", self.script)
+        self.assertNotIn("category.name = cleanCategoryName", self.script)
+
+    def test_copy_confirmation_is_scoped_to_copied_row(self):
+        self.assertIn("item-copy-state", self.script)
+        self.assertIn("COPIED ✓", self.script)
+        self.assertIn(".prompt-item.copied .item-copy-state", self.html)
+        self.assertIn("}, 900)", self.script)
+
 
 if __name__ == "__main__":
     unittest.main()
