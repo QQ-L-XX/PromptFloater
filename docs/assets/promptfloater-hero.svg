@@ -1,0 +1,86 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PromptFloater Command Deck preview</title>
+  <desc id="desc">A dark command deck style desktop prompt launcher interface with lime highlights.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="16%" r="70%">
+      <stop offset="0%" stop-color="#D6FF62" stop-opacity="0.22"/>
+      <stop offset="42%" stop-color="#59E0B8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#050607" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#171A1D"/>
+      <stop offset="100%" stop-color="#090B0D"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="28" stdDeviation="32" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="640" fill="#050607"/>
+  <rect width="1280" height="640" fill="url(#glow)"/>
+  <g opacity="0.18">
+    <path d="M0 112H1280M0 208H1280M0 304H1280M0 400H1280M0 496H1280" stroke="#D6FF62" stroke-width="1"/>
+    <path d="M160 0V640M320 0V640M480 0V640M640 0V640M800 0V640M960 0V640M1120 0V640" stroke="#D6FF62" stroke-width="1"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="210" y="86" width="860" height="468" rx="34" fill="url(#panel)" stroke="#2A3034" stroke-width="2"/>
+    <rect x="234" y="110" width="812" height="420" rx="24" fill="#0B0D0F" stroke="#1F2428"/>
+
+    <g transform="translate(266 142)">
+      <rect x="0" y="0" width="46" height="46" rx="14" fill="#D6FF62"/>
+      <text x="23" y="30" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" fill="#0A0C0E">PF</text>
+      <text x="64" y="18" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="4" fill="#F4F7F8">PROMPTFLOATER</text>
+      <text x="64" y="40" font-family="JetBrains Mono, Consolas, monospace" font-size="12" letter-spacing="2" fill="#8C969D">COMMAND DECK / LOCAL PROMPT LAUNCHER</text>
+    </g>
+
+    <g transform="translate(770 147)">
+      <rect x="0" y="0" width="94" height="30" rx="15" fill="#121619" stroke="#2B3338"/>
+      <circle cx="18" cy="15" r="5" fill="#D6FF62"/>
+      <text x="34" y="20" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#B8C1C8">READY</text>
+      <rect x="112" y="0" width="94" height="30" rx="15" fill="#121619" stroke="#2B3338"/>
+      <text x="132" y="20" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#D6FF62">⌘ /</text>
+      <text x="168" y="20" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#7D878E">FIND</text>
+    </g>
+
+    <g transform="translate(266 218)">
+      <rect width="748" height="58" rx="18" fill="#111518" stroke="#2A3034"/>
+      <text x="24" y="36" font-family="JetBrains Mono, Consolas, monospace" font-size="18" fill="#D6FF62">/</text>
+      <text x="54" y="36" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" fill="#DDE4E7">Search prompts, snippets, commands...</text>
+      <rect x="650" y="14" width="74" height="30" rx="15" fill="#1B2024"/>
+      <text x="687" y="34" text-anchor="middle" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#A8B2B9">ENTER</text>
+    </g>
+
+    <g transform="translate(266 306)">
+      <rect width="188" height="154" rx="22" fill="#101316" stroke="#242B30"/>
+      <text x="24" y="34" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#7D878E">CATEGORIES</text>
+      <rect x="20" y="52" width="148" height="28" rx="14" fill="#D6FF62"/>
+      <text x="36" y="71" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#090B0D">Daily Work</text>
+      <text x="24" y="108" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#AEB8BE">Coding</text>
+      <text x="24" y="136" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#AEB8BE">Writing</text>
+    </g>
+
+    <g transform="translate(478 306)">
+      <rect width="536" height="64" rx="20" fill="#15191D" stroke="#D6FF62" stroke-opacity="0.72"/>
+      <text x="24" y="26" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="750" fill="#F4F7F8">Refactor Review Prompt</text>
+      <text x="24" y="48" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#8E9AA2">Senior engineer pass: correctness, safety, tests, architecture...</text>
+      <rect x="450" y="18" width="62" height="28" rx="14" fill="#D6FF62"/>
+      <text x="481" y="37" text-anchor="middle" font-family="JetBrains Mono, Consolas, monospace" font-size="12" font-weight="800" fill="#07090A">COPY</text>
+
+      <rect y="82" width="536" height="64" rx="20" fill="#101316" stroke="#242B30"/>
+      <text x="24" y="108" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#D8E0E4">Bug Hunt Checklist</text>
+      <text x="24" y="130" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#82909A">Reproduce, isolate, inspect, patch, verify...</text>
+      <text x="472" y="120" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#D6FF62">[2]</text>
+
+      <rect y="164" width="536" height="64" rx="20" fill="#101316" stroke="#242B30"/>
+      <text x="24" y="190" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#D8E0E4">Release Note Generator</text>
+      <text x="24" y="212" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#82909A">Turn commits into clear user-facing release notes...</text>
+      <text x="472" y="202" font-family="JetBrains Mono, Consolas, monospace" font-size="12" fill="#D6FF62">[3]</text>
+    </g>
+
+    <g transform="translate(266 494)">
+      <text x="0" y="0" font-family="JetBrains Mono, Consolas, monospace" font-size="13" fill="#7D878E">LOCAL JSON · ATOMIC SAVE · BACKUP RECOVERY · KEYBOARD FIRST</text>
+      <text x="648" y="0" font-family="JetBrains Mono, Consolas, monospace" font-size="13" fill="#D6FF62">COPIED ✓</text>
+    </g>
+  </g>
+</svg>
