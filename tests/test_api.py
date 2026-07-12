@@ -74,6 +74,18 @@ class AppApiTests(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertIn("复制失败", result["error"])
 
+    def test_get_codex_usage_returns_structured_success(self):
+        api = AppApi(
+            MemoryStore(),
+            lambda _: None,
+            self.logger,
+            codex_usage_provider=lambda: {"available": True, "primary": {"used_percent": 6}},
+        )
+        result = api.get_codex_usage()
+        self.assertTrue(result["ok"])
+        self.assertTrue(result["data"]["available"])
+        self.assertEqual(result["data"]["primary"]["used_percent"], 6)
+
     def test_rotating_log_is_created_in_user_directory(self):
         with tempfile.TemporaryDirectory() as temp:
             logger = setup_logging(Path(temp))

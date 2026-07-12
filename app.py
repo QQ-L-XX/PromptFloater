@@ -235,6 +235,7 @@ def main():
     # ── Expose to JS ────────────────────────────────────────
     window.expose(
         api.copy_to_clipboard,
+        api.get_codex_usage,
         api.get_data,
         api.save_data,
         api.validate_import,

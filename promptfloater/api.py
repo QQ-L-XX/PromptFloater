@@ -2,14 +2,16 @@
 
 import logging
 
+from .codex_usage import get_codex_usage
 from .schema import ValidationError, validate_document
 
 
 class AppApi:
-    def __init__(self, store, clipboard_copy, logger=None):
+    def __init__(self, store, clipboard_copy, logger=None, codex_usage_provider=None):
         self.store = store
         self.clipboard_copy = clipboard_copy
         self.logger = logger or logging.getLogger("promptfloater")
+        self.codex_usage_provider = codex_usage_provider or get_codex_usage
 
     @staticmethod
     def _success(data=None):
@@ -56,3 +58,9 @@ class AppApi:
             return self._success()
         except Exception as error:
             return self._failure("复制失败，请手动复制", error)
+
+    def get_codex_usage(self):
+        try:
+            return self._success(self.codex_usage_provider())
+        except Exception as error:
+            return self._failure("读取 Codex 用量失败，请查看日志", error)

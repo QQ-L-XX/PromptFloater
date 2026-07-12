@@ -6,7 +6,7 @@
   <a href="https://www.python.org/"><img alt="Python 3.8+" src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
   <a href="https://pywebview.flowrl.com/"><img alt="pywebview" src="https://img.shields.io/badge/Desktop-pywebview-d6ff62?style=for-the-badge"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Windows%20%7C%20macOS-ready-111111?style=for-the-badge">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-45%20passing-d6ff62?style=for-the-badge">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-49%20passing-d6ff62?style=for-the-badge">
 </p>
 
 <p align="center">
@@ -51,6 +51,7 @@ The hard part of prompt work is often not invention, but repeatedly finding, cop
 | 快速复制 / Fast copy | 点击、回车、数字键 `1`–`9` 都能复制当前条目。<br>Copy by clicking, pressing `Enter`, or using number keys `1`–`9`. |
 | 搜索过滤 / Search | 按标题、内容、分类快速定位。<br>Filter quickly by title, content, or category. |
 | 收藏与分类 / Favorites & categories | 支持收藏、分类管理、导入和导出 JSON。<br>Manage favorites, categories, JSON import, and JSON export. |
+| Codex 用量 / Codex usage | 自动读取本地 Codex 用量快照，显示 5H/7D 用量和恢复时间。<br>Reads local Codex usage snapshots and shows 5H/7D usage plus reset time. |
 | 贴边悬浮 / Edge floating | 窗口可缩成六边形小球贴在屏幕右侧。<br>Can collapse into a small hexagon docked to the screen edge. |
 | 本地优先 / Local-first | 用户数据写入系统应用数据目录，并保留 `.bak` 备份。<br>User data is stored in the system app-data directory with `.bak` backup. |
 | 稳健存储 / Reliable storage | JSON Schema 校验、原子写入、损坏恢复、滚动日志。<br>Schema validation, atomic writes, corruption recovery, and rotating logs. |
@@ -95,6 +96,14 @@ The launcher scripts create a project-local `.venv` and install dependencies wit
 鼠标与键盘共享同一个选中项。复制成功时，对应条目会短暂显示 `COPIED ✓`。  
 Mouse and keyboard share the same selected item. After copying, the item briefly shows `COPIED ✓`.
 
+## Codex 用量 / Codex Usage
+
+底部状态栏会显示最近一次本地 Codex 用量快照，例如 `CODEX 15% · 15:22`。这里的百分比是主窗口用量，时间是本机时区下的恢复时间；悬停可查看 5H 和 7D 两个窗口，点击状态卡或工具菜单里的 `CODEX USAGE` 可手动刷新。  
+The bottom status bar shows the latest local Codex usage snapshot, for example `CODEX 15% · 15:22`. The percentage is the primary usage window and the time is the reset time in your local timezone. Hover to see both 5H and 7D windows; click the status chip or `CODEX USAGE` in the tools menu to refresh.
+
+PromptFloater 只读取本机 `.codex/sessions` 和 `.codex/archived_sessions` 里的非敏感用量事件，不读取认证文件，也不会上传这些数据。  
+PromptFloater only reads non-sensitive usage events from local `.codex/sessions` and `.codex/archived_sessions` logs. It does not read auth files and does not upload this data.
+
 ## 项目结构 / Project Structure
 
 ```text
@@ -104,6 +113,7 @@ PromptFloater
 ├─ renderer/app.js           # frontend interactions, search, shortcuts, copy feedback
 ├─ promptfloater/
 │  ├─ api.py                 # backend bridge API
+│  ├─ codex_usage.py         # local Codex usage snapshot reader
 │  ├─ paths.py               # cross-platform user-data paths
 │  ├─ schema.py              # prompt data validation
 │  ├─ storage.py             # atomic writes, backup, recovery

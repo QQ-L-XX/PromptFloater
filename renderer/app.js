@@ -84,6 +84,54 @@
       .trim();
   }
 
+  function formatResetTime(epochSeconds) {
+    if (!epochSeconds) return "--";
+    return new Date(epochSeconds * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function usageLabel(windowInfo) {
+    if (!windowInfo) return "--";
+    const used = Number(windowInfo.used_percent || 0).toFixed(Number.isInteger(windowInfo.used_percent) ? 0 : 1);
+    return `${used}% · ${formatResetTime(windowInfo.resets_at)}`;
+  }
+
+  function renderCodexUsage(snapshot) {
+    const button = $("#codex-usage");
+    const text = $("#codex-usage-text");
+    button.classList.remove("warn", "hot");
+    if (!snapshot?.available) {
+      text.textContent = "未检测到";
+      button.title = snapshot?.error || "未检测到 Codex 用量记录";
+      return;
+    }
+    text.textContent = usageLabel(snapshot.primary);
+    const primaryUsed = Number(snapshot.primary?.used_percent || 0);
+    button.classList.toggle("warn", primaryUsed >= 70 && primaryUsed < 90);
+    button.classList.toggle("hot", primaryUsed >= 90);
+    const weekly = snapshot.secondary ? `7D ${usageLabel(snapshot.secondary)}` : "7D --";
+    button.title = `Codex 5H ${usageLabel(snapshot.primary)} | ${weekly}\n恢复时间按本机时区显示\n记录时间 ${snapshot.captured_at || "--"}`;
+  }
+
+  async function refreshCodexUsage(showToast = false) {
+    if (!api?.get_codex_usage) {
+      renderCodexUsage({ available: false, error: "当前版本不支持读取 Codex 用量" });
+      return;
+    }
+    try {
+      const result = await api.get_codex_usage();
+      if (!result.ok) {
+        renderCodexUsage({ available: false, error: result.error });
+        if (showToast) toast("!", result.error || "读取 Codex 用量失败");
+        return;
+      }
+      renderCodexUsage(result.data);
+      if (showToast) toast("ok", "Codex usage refreshed");
+    } catch (_) {
+      renderCodexUsage({ available: false, error: "读取 Codex 用量失败" });
+      if (showToast) toast("!", "读取 Codex 用量失败");
+    }
+  }
+
   function svgIcon(name) {
     const paths = {
       fav: "M12 3.7l2.55 5.17 5.7.83-4.13 4.02.98 5.68L12 16.72 6.9 19.4l.98-5.68L3.75 9.7l5.7-.83L12 3.7z",
@@ -579,6 +627,8 @@
       if (row && !event.target.closest("[data-act]")) openItemModal(row.dataset.iid);
     });
     $("#btn-add-item").addEventListener("click", () => openItemModal());
+    $("#codex-usage").addEventListener("click", () => refreshCodexUsage(true));
+    $("#btn-codex-usage").addEventListener("click", () => refreshCodexUsage(true));
     $("#btn-manage").addEventListener("click", openManageModal);
     $("#btn-export").addEventListener("click", exportData);
     $("#btn-tools").addEventListener("click", (event) => { event.stopPropagation(); toggleToolsMenu(); });
@@ -626,6 +676,8 @@
     state.data = result.data;
     state.activeCategoryId = state.data.categories[0]?.id || null;
     renderAll();
+    refreshCodexUsage();
+    setInterval(refreshCodexUsage, 60000);
   }
 
   if (window.pywebview?.api) start();

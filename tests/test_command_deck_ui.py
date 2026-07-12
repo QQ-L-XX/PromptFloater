@@ -48,9 +48,17 @@ class CommandDeckUiTests(unittest.TestCase):
 
     def test_tools_menu_routes_existing_actions(self):
         self.assertIn("toggleToolsMenu", self.script)
+        self.assertIn('data-tool="codex-usage"', self.html)
         self.assertIn('data-tool="export"', self.html)
         self.assertIn('data-tool="import"', self.html)
         self.assertIn('data-tool="categories"', self.html)
+
+    def test_codex_usage_status_card_exists(self):
+        self.assertIn('id="codex-usage"', self.html)
+        self.assertIn('id="codex-usage-text"', self.html)
+        self.assertIn("function refreshCodexUsage", self.script)
+        self.assertIn("api.get_codex_usage", self.script)
+        self.assertIn("setInterval(refreshCodexUsage, 60000)", self.script)
 
     def test_icons_use_fixed_svg_instead_of_platform_glyphs(self):
         self.assertIn("function svgIcon", self.script)
