@@ -31,6 +31,13 @@ class LauncherTests(unittest.TestCase):
         requirements = Path("requirements.txt").read_text(encoding="utf-8")
         self.assertRegex(requirements, r"pywebview>=6\.0,<7\.0")
         self.assertRegex(requirements, r"pyperclip>=1\.8,<2\.0")
+        self.assertRegex(requirements, r"pyinstaller>=6\.0,<7\.0")
+
+    def test_windows_packaging_script_builds_release_zip(self):
+        text = Path("打包-Windows.bat").read_text(encoding="utf-8")
+        self.assertIn("PyInstaller", text)
+        self.assertIn("packaging\\PromptFloater.spec", text)
+        self.assertIn("PromptFloater-Windows.zip", text)
 
 
 if __name__ == "__main__":

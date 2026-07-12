@@ -58,6 +58,11 @@ The hard part of prompt work is often not invention, but repeatedly finding, cop
 
 ## 快速开始 / Quick Start
 
+### 普通用户 / Regular users
+
+如果已经下载发布包，解压 `PromptFloater-Windows.zip` 后双击 `PromptFloater.exe` 即可。  
+If you downloaded a release package, unzip `PromptFloater-Windows.zip` and double-click `PromptFloater.exe`.
+
 ### 1. 安装 Python / Install Python
 
 需要 Python 3.8 或更高版本。  
@@ -145,6 +150,17 @@ PromptFloater
 ```bash
 python -m unittest discover -s tests -v
 ```
+
+Windows 打包 / Windows packaging:
+
+```bat
+打包-Windows.bat
+```
+
+打包完成后会生成 / Outputs:
+
+- `dist\PromptFloater\PromptFloater.exe`
+- `release\PromptFloater-Windows.zip`
 
 当前测试覆盖 / Current test coverage:
 
