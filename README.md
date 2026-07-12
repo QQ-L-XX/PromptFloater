@@ -98,8 +98,8 @@ Mouse and keyboard share the same selected item. After copying, the item briefly
 
 ## Codex 用量 / Codex Usage
 
-底部状态栏会显示最近一次本地 Codex 用量快照，例如 `CODEX 15% · 15:22`。这里的百分比是主窗口用量，时间是本机时区下的恢复时间；悬停可查看 5H 和 7D 两个窗口，点击状态卡或工具菜单里的 `CODEX USAGE` 可手动刷新。  
-The bottom status bar shows the latest local Codex usage snapshot, for example `CODEX 15% · 15:22`. The percentage is the primary usage window and the time is the reset time in your local timezone. Hover to see both 5H and 7D windows; click the status chip or `CODEX USAGE` in the tools menu to refresh.
+底部状态栏会显示最近一次本地 Codex 用量快照，例如 `CODEX 5H 69%→15:22 · 7D 59%→07/18`。这里的百分比和恢复时间会按 5H/7D 两个窗口分别标注；点击状态卡或工具菜单里的 `CODEX USAGE` 可手动刷新。  
+The bottom status bar shows the latest local Codex usage snapshot, for example `CODEX 5H 69%→15:22 · 7D 59%→07/18`. Usage and reset time are labeled separately for the 5H and 7D windows; click the status chip or `CODEX USAGE` in the tools menu to refresh.
 
 PromptFloater 只读取本机 `.codex/sessions` 和 `.codex/archived_sessions` 里的非敏感用量事件，不读取认证文件，也不会上传这些数据。  
 PromptFloater only reads non-sensitive usage events from local `.codex/sessions` and `.codex/archived_sessions` logs. It does not read auth files and does not upload this data.

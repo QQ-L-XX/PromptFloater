@@ -95,6 +95,20 @@
     return `${used}% · ${formatResetTime(windowInfo.resets_at)}`;
   }
 
+  function compactResetDate(epochSeconds) {
+    if (!epochSeconds) return "--";
+    const date = new Date(epochSeconds * 1000);
+    const now = new Date();
+    if (date.toDateString() === now.toDateString()) return formatResetTime(epochSeconds);
+    return date.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
+  }
+
+  function compactUsage(windowInfo) {
+    if (!windowInfo) return "--";
+    const used = Number(windowInfo.used_percent || 0).toFixed(Number.isInteger(windowInfo.used_percent) ? 0 : 1);
+    return `${used}%→${compactResetDate(windowInfo.resets_at)}`;
+  }
+
   function renderCodexUsage(snapshot) {
     const button = $("#codex-usage");
     const text = $("#codex-usage-text");
@@ -104,7 +118,7 @@
       button.title = snapshot?.error || "未检测到 Codex 用量记录";
       return;
     }
-    text.textContent = usageLabel(snapshot.primary);
+    text.textContent = `5H ${compactUsage(snapshot.primary)} · 7D ${compactUsage(snapshot.secondary)}`;
     const primaryUsed = Number(snapshot.primary?.used_percent || 0);
     button.classList.toggle("warn", primaryUsed >= 70 && primaryUsed < 90);
     button.classList.toggle("hot", primaryUsed >= 90);
