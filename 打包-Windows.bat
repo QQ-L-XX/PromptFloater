@@ -27,6 +27,7 @@ if errorlevel 1 (
 )
 
 if exist build rmdir /s /q build
+taskkill /f /im PromptFloater.exe >nul 2>&1
 if exist dist rmdir /s /q dist
 if not exist release mkdir release
 

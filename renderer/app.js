@@ -111,6 +111,13 @@
     return `剩${value}%→${compactResetDate(windowInfo.resets_at)}`;
   }
 
+  function compactRemaining(windowInfo) {
+    if (!windowInfo) return "--";
+    const remaining = Math.max(0, 100 - Number(windowInfo.used_percent || 0));
+    const value = remaining.toFixed(Number.isInteger(remaining) ? 0 : 1);
+    return `${value}%`;
+  }
+
   function renderCodexUsage(snapshot) {
     const button = $("#codex-usage");
     const text = $("#codex-usage-text");
@@ -120,7 +127,7 @@
       button.title = snapshot?.error || "未检测到 Codex 用量记录";
       return;
     }
-    text.textContent = `5H ${compactUsage(snapshot.primary)} · 7D ${compactUsage(snapshot.secondary)}`;
+    text.textContent = `5H剩${compactRemaining(snapshot.primary)}`;
     const primaryRemaining = Math.max(0, 100 - Number(snapshot.primary?.used_percent || 0));
     button.classList.toggle("warn", primaryRemaining <= 30 && primaryRemaining > 10);
     button.classList.toggle("hot", primaryRemaining <= 10);

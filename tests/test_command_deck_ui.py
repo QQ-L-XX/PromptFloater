@@ -60,9 +60,11 @@ class CommandDeckUiTests(unittest.TestCase):
         self.assertIn("api.get_codex_usage", self.script)
         self.assertIn("setInterval(refreshCodexUsage, 60000)", self.script)
         self.assertIn("function compactUsage", self.script)
-        self.assertIn("5H ${compactUsage(snapshot.primary)}", self.script)
-        self.assertIn("7D ${compactUsage(snapshot.secondary)}", self.script)
+        self.assertIn("function compactRemaining", self.script)
+        self.assertIn("5H剩${compactRemaining(snapshot.primary)}", self.script)
+        self.assertIn("7D ${usageLabel(snapshot.secondary)}", self.script)
         self.assertIn('id="snap-usage"', self.html)
+        self.assertIn("<strong>CDX</strong>", self.html)
         self.assertIn("100 - Number(windowInfo.used_percent", self.script)
         self.assertIn("100 - Number(snapshot.primary?.used_percent", self.script)
 

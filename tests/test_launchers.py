@@ -36,6 +36,7 @@ class LauncherTests(unittest.TestCase):
     def test_windows_packaging_script_builds_release_zip(self):
         text = Path("打包-Windows.bat").read_text(encoding="utf-8")
         self.assertIn("PyInstaller", text)
+        self.assertIn("taskkill /f /im PromptFloater.exe", text)
         self.assertIn("packaging\\PromptFloater.spec", text)
         self.assertIn("PromptFloater-Windows.zip", text)
 
