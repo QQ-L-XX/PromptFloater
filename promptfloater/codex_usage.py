@@ -70,8 +70,8 @@ def _rate_limits_from_event(event: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
-def _latest_rate_limits(codex_home: Path) -> tuple[dict[str, Any], datetime, Path] | None:
-    latest: tuple[dict[str, Any], datetime, Path] | None = None
+def _iter_rate_limit_events(codex_home: Path) -> list[tuple[dict[str, Any], datetime, Path]]:
+    events: list[tuple[dict[str, Any], datetime, Path]] = []
     for path in _candidate_logs(codex_home):
         for line in reversed(_tail_lines(path)):
             if '"token_count"' not in line or '"rate_limits"' not in line:
@@ -84,14 +84,12 @@ def _latest_rate_limits(codex_home: Path) -> tuple[dict[str, Any], datetime, Pat
             if not rate_limits:
                 continue
             timestamp = _event_timestamp(event)
-            if latest is None or timestamp > latest[1]:
-                latest = (rate_limits, timestamp, path)
+            events.append((rate_limits, timestamp, path))
             break
-    return latest
+    return events
 
 
-def _window_snapshot(rate_limits: dict[str, Any], key: str) -> dict[str, Any] | None:
-    raw = rate_limits.get(key)
+def _window_snapshot(raw: dict[str, Any]) -> dict[str, Any] | None:
     if not isinstance(raw, dict):
         return None
     used_percent = raw.get("used_percent")
@@ -107,6 +105,31 @@ def _window_snapshot(rate_limits: dict[str, Any], key: str) -> dict[str, Any] | 
     }
 
 
+def _aggregate_window(events: list[tuple[dict[str, Any], datetime, Path]], key: str) -> dict[str, Any] | None:
+    windows: list[dict[str, Any]] = []
+    for rate_limits, timestamp, _path in events:
+        raw = rate_limits.get(key)
+        if not isinstance(raw, dict):
+            continue
+        snapshot = _window_snapshot(raw)
+        if not snapshot:
+            continue
+        snapshot["_timestamp"] = timestamp
+        windows.append(snapshot)
+    if not windows:
+        return None
+
+    latest_reset = max(window["resets_at"] for window in windows)
+    current_windows = [window for window in windows if window["resets_at"] == latest_reset]
+    highest = max(current_windows, key=lambda window: window["used_percent"])
+    return {
+        "used_percent": highest["used_percent"],
+        "window_minutes": highest["window_minutes"],
+        "resets_at": highest["resets_at"],
+        "resets_at_iso": highest["resets_at_iso"],
+    }
+
+
 def get_codex_usage(codex_home: str | os.PathLike[str] | None = None) -> dict[str, Any]:
     """Return the latest local Codex usage snapshot.
 
@@ -116,22 +139,24 @@ def get_codex_usage(codex_home: str | os.PathLike[str] | None = None) -> dict[st
     """
 
     home = Path(codex_home) if codex_home is not None else default_codex_home()
-    latest = _latest_rate_limits(home)
-    if latest is None:
+    events = _iter_rate_limit_events(home)
+    if not events:
         return {"available": False, "error": "未检测到 Codex 用量记录"}
 
-    rate_limits, timestamp, path = latest
-    primary = _window_snapshot(rate_limits, "primary")
+    primary = _aggregate_window(events, "primary")
     if primary is None:
         return {"available": False, "error": "Codex 用量记录格式不完整"}
 
+    latest_rate_limits, latest_timestamp, latest_path = max(events, key=lambda event: event[1])
     result: dict[str, Any] = {
         "available": True,
-        "limit_id": rate_limits.get("limit_id") or "codex",
-        "limit_name": rate_limits.get("limit_name"),
+        "limit_id": latest_rate_limits.get("limit_id") or "codex",
+        "limit_name": latest_rate_limits.get("limit_name"),
         "primary": primary,
-        "secondary": _window_snapshot(rate_limits, "secondary"),
-        "captured_at": timestamp.astimezone().isoformat(timespec="seconds"),
-        "source": str(path),
+        "secondary": _aggregate_window(events, "secondary"),
+        "captured_at": latest_timestamp.astimezone().isoformat(timespec="seconds"),
+        "source": str(latest_path),
+        "source_count": len(events),
+        "aggregation": "max_used_percent_for_current_reset_window",
     }
     return result

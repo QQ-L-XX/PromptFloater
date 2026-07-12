@@ -54,6 +54,26 @@ class CodexUsageTests(unittest.TestCase):
         self.assertEqual(result["primary"]["window_minutes"], 300)
         self.assertEqual(result["primary"]["resets_at"], 1783843600)
         self.assertEqual(result["secondary"]["used_percent"], 56)
+        self.assertEqual(result["aggregation"], "max_used_percent_for_current_reset_window")
+
+    def test_aggregates_highest_usage_for_current_reset_window(self):
+        with tempfile.TemporaryDirectory() as temp:
+            log_dir = Path(temp) / "sessions" / "2026" / "07" / "12"
+            log_dir.mkdir(parents=True)
+            (log_dir / "older-high.jsonl").write_text(
+                json.dumps(token_event("2026-07-12T02:00:00Z", 72, 1783843600, 58, 1784440000)),
+                encoding="utf-8",
+            )
+            (log_dir / "newer-low.jsonl").write_text(
+                json.dumps(token_event("2026-07-12T02:01:00Z", 5, 1783843600, 20, 1784440000)),
+                encoding="utf-8",
+            )
+
+            result = get_codex_usage(temp)
+
+        self.assertTrue(result["available"])
+        self.assertEqual(result["primary"]["used_percent"], 72)
+        self.assertEqual(result["secondary"]["used_percent"], 58)
 
     def test_reports_unavailable_when_no_usage_logs_exist(self):
         with tempfile.TemporaryDirectory() as temp:

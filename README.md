@@ -6,7 +6,7 @@
   <a href="https://www.python.org/"><img alt="Python 3.8+" src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
   <a href="https://pywebview.flowrl.com/"><img alt="pywebview" src="https://img.shields.io/badge/Desktop-pywebview-d6ff62?style=for-the-badge"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Windows%20%7C%20macOS-ready-111111?style=for-the-badge">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-49%20passing-d6ff62?style=for-the-badge">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-50%20passing-d6ff62?style=for-the-badge">
 </p>
 
 <p align="center">
