@@ -64,7 +64,7 @@
     .tt-desc{position:fixed;z-index:90;max-width:240px;padding:7px 9px;border:1px solid var(--line2);border-radius:5px;background:#151515;color:#aaa;opacity:0;pointer-events:none;font-size:10px;transition:opacity var(--fast)}.tt-desc.on{opacity:1}
     .quit-dialog{width:260px;padding:18px;text-align:center}.quit-dialog p{margin-bottom:15px;color:#aaa}.quit-btns{display:flex;justify-content:center;gap:7px}.quit-btns button{padding:7px 18px;border-radius:5px;cursor:pointer}.quit-btn-no{border:1px solid var(--line2);background:#171717;color:#888}.quit-btn-yes{background:var(--danger);color:#fff}
     .resize-handle{position:absolute;right:2px;bottom:1px;z-index:70;width:13px;height:13px;color:#444;cursor:nwse-resize}
-    .snapped-indicator{display:none;width:28px;height:28px;cursor:pointer}.snap-core{display:grid;place-items:center;width:28px;height:28px;clip-path:polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%);background:var(--lime);color:#101207;font:bold 8px var(--mono);filter:drop-shadow(0 0 7px rgba(214,255,98,.35));animation:snapPulse 2.4s ease-in-out infinite}@keyframes snapPulse{50%{filter:drop-shadow(0 0 12px rgba(214,255,98,.65));transform:scale(1.06)}}
+    .snapped-indicator{display:none;width:34px;height:34px;cursor:pointer}.snap-core{display:grid;place-items:center;width:34px;height:34px;clip-path:polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%);background:var(--lime);color:#101207;font:bold 9px var(--mono);filter:drop-shadow(0 0 7px rgba(214,255,98,.35));animation:snapPulse 2.4s ease-in-out infinite}.snapped-indicator.warn .snap-core{background:#ffd36b}.snapped-indicator.hot .snap-core{background:var(--danger);color:#fff}@keyframes snapPulse{50%{filter:drop-shadow(0 0 12px rgba(214,255,98,.65));transform:scale(1.06)}}
     .app-shell.snapped{display:flex!important;align-items:center!important;justify-content:center!important;overflow:visible!important;border:0!important;background:transparent!important}.app-shell.snapped #app,.app-shell.snapped .titlebar,.app-shell.snapped .resize-handle{display:none!important}.app-shell.snapped .snapped-indicator{display:block}
   </style>
 </head>
@@ -79,7 +79,7 @@
         <button class="tb-btn" id="btn-quit" aria-label="退出" title="退出"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
     </header>
-    <div class="snapped-indicator" id="snapped-indicator"><div class="snap-core">PF</div></div>
+    <div class="snapped-indicator" id="snapped-indicator" title="Codex 剩余用量"><div class="snap-core" id="snap-usage">PF</div></div>
     <main id="app">
       <section id="command-search"><div class="search-wrapper"><span class="search-prefix">/</span><input type="text" id="search-input" aria-label="搜索提示词" placeholder="搜索或输入快捷指令"><button class="search-clear hidden" id="search-clear" aria-label="清空搜索"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></section>
       <nav class="category-nav" id="category-nav" aria-label="提示词分类"></nav>

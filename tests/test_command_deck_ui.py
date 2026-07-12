@@ -62,6 +62,9 @@ class CommandDeckUiTests(unittest.TestCase):
         self.assertIn("function compactUsage", self.script)
         self.assertIn("5H ${compactUsage(snapshot.primary)}", self.script)
         self.assertIn("7D ${compactUsage(snapshot.secondary)}", self.script)
+        self.assertIn('id="snap-usage"', self.html)
+        self.assertIn("100 - Number(windowInfo.used_percent", self.script)
+        self.assertIn("100 - Number(snapshot.primary?.used_percent", self.script)
 
     def test_icons_use_fixed_svg_instead_of_platform_glyphs(self):
         self.assertIn("function svgIcon", self.script)

@@ -91,8 +91,9 @@
 
   function usageLabel(windowInfo) {
     if (!windowInfo) return "--";
-    const used = Number(windowInfo.used_percent || 0).toFixed(Number.isInteger(windowInfo.used_percent) ? 0 : 1);
-    return `${used}% · ${formatResetTime(windowInfo.resets_at)}`;
+    const remaining = Math.max(0, 100 - Number(windowInfo.used_percent || 0));
+    const value = remaining.toFixed(Number.isInteger(remaining) ? 0 : 1);
+    return `剩${value}% · ${formatResetTime(windowInfo.resets_at)}`;
   }
 
   function compactResetDate(epochSeconds) {
@@ -105,8 +106,9 @@
 
   function compactUsage(windowInfo) {
     if (!windowInfo) return "--";
-    const used = Number(windowInfo.used_percent || 0).toFixed(Number.isInteger(windowInfo.used_percent) ? 0 : 1);
-    return `${used}%→${compactResetDate(windowInfo.resets_at)}`;
+    const remaining = Math.max(0, 100 - Number(windowInfo.used_percent || 0));
+    const value = remaining.toFixed(Number.isInteger(remaining) ? 0 : 1);
+    return `剩${value}%→${compactResetDate(windowInfo.resets_at)}`;
   }
 
   function renderCodexUsage(snapshot) {
@@ -119,9 +121,17 @@
       return;
     }
     text.textContent = `5H ${compactUsage(snapshot.primary)} · 7D ${compactUsage(snapshot.secondary)}`;
-    const primaryUsed = Number(snapshot.primary?.used_percent || 0);
-    button.classList.toggle("warn", primaryUsed >= 70 && primaryUsed < 90);
-    button.classList.toggle("hot", primaryUsed >= 90);
+    const primaryRemaining = Math.max(0, 100 - Number(snapshot.primary?.used_percent || 0));
+    button.classList.toggle("warn", primaryRemaining <= 30 && primaryRemaining > 10);
+    button.classList.toggle("hot", primaryRemaining <= 10);
+    const snapCore = $("#snap-usage");
+    if (snapCore) snapCore.textContent = `${Math.round(primaryRemaining)}%`;
+    const snapIndicator = $("#snapped-indicator");
+    if (snapIndicator) {
+      snapIndicator.classList.toggle("warn", primaryRemaining <= 30 && primaryRemaining > 10);
+      snapIndicator.classList.toggle("hot", primaryRemaining <= 10);
+      snapIndicator.title = `Codex 5H 剩余 ${Math.round(primaryRemaining)}%，点击展开`;
+    }
     const weekly = snapshot.secondary ? `7D ${usageLabel(snapshot.secondary)}` : "7D --";
     button.title = `Codex 5H ${usageLabel(snapshot.primary)} | ${weekly}\n恢复时间按本机时区显示\n记录时间 ${snapshot.captured_at || "--"}`;
   }

@@ -122,7 +122,7 @@ def main():
         ww, wh = 400, 560
         x, y = sw - ww - 40, sh - wh - 100
 
-    state = {"snapped": False, "normal_geo": (ww, wh, x, y), "snap_visible": 28}
+    state = {"snapped": False, "normal_geo": (ww, wh, x, y), "snap_visible": 34}
 
     # On macOS, use a slightly different background to match vibrancy
     bg = "#0d0d14"
@@ -138,7 +138,7 @@ def main():
         on_top=True,
         easy_drag=False,
         resizable=True,
-        min_size=(28, 28),
+        min_size=(34, 34),
         background_color=bg,
     )
 
