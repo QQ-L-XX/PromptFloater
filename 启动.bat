@@ -31,3 +31,4 @@ if errorlevel 1 (
 )
 
 start "" "%PYTHONW%" app.py
+exit /b 0

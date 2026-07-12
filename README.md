@@ -75,7 +75,7 @@ The launcher scripts create a project-local `.venv` and install dependencies wit
 
 | 平台 / Platform | 启动方式 / How to launch |
 |---|---|
-| Windows | 双击 `启动.bat`<br>Double-click `启动.bat` |
+| Windows | 双击 `启动无黑窗.vbs`；需要看安装/报错时再双击 `启动.bat`<br>Double-click `启动无黑窗.vbs`; use `启动.bat` when you want to see setup or error output |
 | macOS | 双击 `启动.command`（首次可能需要右键 → 打开）<br>Double-click `启动.command` (first launch may require right-click → Open) |
 | 命令行 / CLI | Windows: `.venv\Scripts\python.exe app.py` |
 | 命令行 / CLI | macOS/Linux: `.venv/bin/python3 app.py` |
