@@ -604,9 +604,10 @@
     window.addEventListener("mouseup", () => { resizing = false; });
 
     let snapped = false, pinned = false, blurTimer = null, hoverTimer = null;
-    const setSnapped = (value) => { snapped = value; shell.classList.toggle("snapped", value); $("#btn-snap").classList.toggle("pinned", value); };
+    const setSnapped = (value) => { snapped = value; shell.classList.toggle("snapped", value); document.documentElement.classList.toggle("snapped-mode", value); document.body.classList.toggle("snapped-mode", value); $("#btn-snap").classList.toggle("pinned", value); };
     const snap = async () => { if (!snapped && await api.snap_to_edge()) setSnapped(true); };
     const unsnap = async () => { if (snapped && await api.unsnap_from_edge()) setSnapped(false); };
+    window.addEventListener("promptfloater-native-unsnap", () => setSnapped(false));
     $("#btn-snap").addEventListener("click", () => snapped ? unsnap() : snap());
     $("#snapped-indicator").addEventListener("click", (event) => { event.stopPropagation(); unsnap(); });
     $("#btn-pin").addEventListener("click", () => {

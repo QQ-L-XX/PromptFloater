@@ -4,6 +4,22 @@ from pathlib import Path
 
 
 class LauncherTests(unittest.TestCase):
+    def test_window_uses_transparency_for_shaped_snap_mode(self):
+        text = Path("app.py").read_text(encoding="utf-8")
+        self.assertIn("transparent=True", text)
+        self.assertIn("shadow=False", text)
+        self.assertIn("CreateEllipticRgn", text)
+        self.assertIn("GetDpiForWindow", text)
+        self.assertIn("SetWindowRgn", text)
+        self.assertIn("class NativeSnapOverlay", text)
+        self.assertIn('attributes("-transparentcolor"', text)
+        self.assertIn("SetThreadDpiAwarenessContext", text)
+        self.assertIn("screen_width - size", text)
+        self.assertIn("vertical_center / sh", text)
+        self.assertIn('font=("Consolas", -16, "bold")', text)
+        self.assertIn('canvas.bind("<Enter>", schedule_open)', text)
+        self.assertIn("root.after(220, open_main)", text)
+
     def test_windows_launcher_uses_project_virtualenv(self):
         text = Path("启动.bat").read_text(encoding="utf-8")
         self.assertIn(".venv\\Scripts\\python.exe", text)

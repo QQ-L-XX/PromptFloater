@@ -6,7 +6,7 @@
   <a href="https://www.python.org/"><img alt="Python 3.8+" src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white"></a>
   <a href="https://pywebview.flowrl.com/"><img alt="pywebview" src="https://img.shields.io/badge/Desktop-pywebview-d6ff62?style=for-the-badge"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Windows%20%7C%20macOS-ready-111111?style=for-the-badge">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-50%20passing-d6ff62?style=for-the-badge">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-53%20passing-41f6ff?style=for-the-badge">
 </p>
 
 <p align="center">
@@ -47,12 +47,12 @@ The hard part of prompt work is often not invention, but repeatedly finding, cop
 
 | 能力 / Feature | 说明 / Description |
 |---|---|
-| Command Deck UI | 黑曜石风格桌面指挥台，低干扰、高密度、键盘友好。<br>Obsidian-like command deck UI: focused, dense, and keyboard-friendly. |
+| Cyberpunk Command Deck | 青紫 HUD 风格桌面指挥台，带动态扫描、高密度列表和窄窗口自适应。<br>A cyan-magenta HUD command deck with animated scanning, dense lists, and responsive narrow-window layout. |
 | 快速复制 / Fast copy | 点击、回车、数字键 `1`–`9` 都能复制当前条目。<br>Copy by clicking, pressing `Enter`, or using number keys `1`–`9`. |
 | 搜索过滤 / Search | 按标题、内容、分类快速定位。<br>Filter quickly by title, content, or category. |
 | 收藏与分类 / Favorites & categories | 支持收藏、分类管理、导入和导出 JSON。<br>Manage favorites, categories, JSON import, and JSON export. |
 | Codex 用量 / Codex usage | 自动读取本地 Codex 用量快照，显示 5H/7D 用量和恢复时间。<br>Reads local Codex usage snapshots and shows 5H/7D usage plus reset time. |
-| 贴边悬浮 / Edge floating | 窗口可缩成六边形小球贴在屏幕右侧。<br>Can collapse into a small hexagon docked to the screen edge. |
+| 透明动态缩边 / Transparent edge overlay | Windows 使用独立透明动态核心显示剩余用量，支持 DPI 定位、悬停展开和点击展开。<br>Windows uses a transparent animated usage core with DPI-aware positioning, hover-to-open, and click-to-open. |
 | 本地优先 / Local-first | 用户数据写入系统应用数据目录，并保留 `.bak` 备份。<br>User data is stored in the system app-data directory with `.bak` backup. |
 | 稳健存储 / Reliable storage | JSON Schema 校验、原子写入、损坏恢复、滚动日志。<br>Schema validation, atomic writes, corruption recovery, and rotating logs. |
 
@@ -103,8 +103,8 @@ Mouse and keyboard share the same selected item. After copying, the item briefly
 
 ## Codex 用量 / Codex Usage
 
-底部状态栏会显示最近一次本地 Codex 用量快照，例如 `CODEX 5H 剩31%→15:22 · 7D 剩41%→07/18`。这里显示的是剩余用量和恢复时间，并按 5H/7D 两个窗口分别标注；缩边小球也会显示 5H 剩余百分比。点击状态卡或工具菜单里的 `CODEX USAGE` 可手动刷新。  
-The bottom status bar shows the latest local Codex usage snapshot, for example `CODEX 5H 剩31%→15:22 · 7D 剩41%→07/18`. It shows remaining usage and reset time, labeled separately for the 5H and 7D windows. The collapsed edge bubble also shows the remaining 5H percentage. Click the status chip or `CODEX USAGE` in the tools menu to refresh.
+底部状态栏会显示最近一次本地 Codex 用量快照，例如 `CDX 5H剩79%`；完整的 5H/7D 剩余用量和恢复时间可在悬停提示中查看。Windows 缩边核心也会显示 5H 剩余百分比，鼠标悬停约 220ms 或点击即可展开。点击状态卡或工具菜单里的 `CODEX USAGE` 可手动刷新。<br>
+The bottom status bar shows the latest local Codex usage snapshot, for example `CDX 5H剩79%`; full 5H/7D remaining usage and reset times are available in the tooltip. The Windows edge overlay also shows the remaining 5H percentage and opens after a roughly 220 ms hover or a click. Click the status chip or `CODEX USAGE` in the tools menu to refresh.
 
 PromptFloater 只读取本机 `.codex/sessions` 和 `.codex/archived_sessions` 里的非敏感用量事件，不读取认证文件，也不会上传这些数据。  
 PromptFloater only reads non-sensitive usage events from local `.codex/sessions` and `.codex/archived_sessions` logs. It does not read auth files and does not upload this data.
