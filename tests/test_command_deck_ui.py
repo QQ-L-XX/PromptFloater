@@ -47,6 +47,12 @@ class CommandDeckUiTests(unittest.TestCase):
         self.assertIn('case "f"', self.script)
         self.assertIn("if (isTypingTarget(event.target))", self.script)
 
+    def test_status_shortcuts_are_clickable_actions(self):
+        self.assertIn('id="btn-edit-selected"', self.html)
+        self.assertIn('id="btn-fav-selected"', self.html)
+        self.assertIn('$("#btn-edit-selected").addEventListener("click"', self.script)
+        self.assertIn('$("#btn-fav-selected").addEventListener("click"', self.script)
+
     def test_tools_menu_routes_existing_actions(self):
         self.assertIn("toggleToolsMenu", self.script)
         self.assertIn('data-tool="codex-usage"', self.html)

@@ -659,6 +659,14 @@
       if (row && !event.target.closest("[data-act]")) openItemModal(row.dataset.iid);
     });
     $("#btn-add-item").addEventListener("click", () => openItemModal());
+    $("#btn-edit-selected").addEventListener("click", () => {
+      const item = selectedItem();
+      if (item) openItemModal(item.id);
+    });
+    $("#btn-fav-selected").addEventListener("click", () => {
+      const item = selectedItem();
+      if (item) toggleFavorite(item.id);
+    });
     $("#codex-usage").addEventListener("click", () => refreshCodexUsage(true));
     $("#btn-codex-usage").addEventListener("click", () => refreshCodexUsage(true));
     $("#btn-manage").addEventListener("click", openManageModal);
